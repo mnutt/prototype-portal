@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Test Portal</title>
+  <link rel="stylesheet" href="page.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="themes/default.css" type="text/css" media="screen" charset="utf-8" />
+  <script type="text/javascript" src="prototype.js"></script> 
+  <script type="text/javascript" src="effects.js"></script> 
+  <script type="text/javascript" src="builder.js"></script> 
+  <script type="text/javascript" src="dragdrop.js"></script> 
+  <script type="text/javascript" src="portal.js"></script>  
+</head>
+<body>      
+  <h1>Portal test page</h1>
+  <div id="page">
+      <div id="widget_col_0"></div>
+      <div id="widget_col_1"></div>
+      <div id="widget_col_2"></div>
+ </div>    
+ <div id="control_buttons" style="display:none">
+   <a href="#" id="edit_button"></a>
+   <a href="#" onclick="removeWidget(this); return false;" id="delete_button"></a>
+ </div>
+
+  <script type="text/javascript">
+     var portal;     
+     var latin1 = "<h2>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>";
+     var latin2 = "<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> ";
+     var latin3 = "<h3>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3> ";
+      
+     function onOverWidget(portal, widget) {
+       widget.getElement().insertBefore($('control_buttons'), widget.getElement().firstChild);
+       $('control_buttons').show(); 
+     } 
+   
+     function onOutWidget(portal, widget) {
+       $('control_buttons').hide();      
+     } 
+   
+     function removeWidget(element) {
+       var widget = $(element).up(".widget").widget;
+     
+       if (confirm('Are sure to remove this widget?')) { 
+         document.body.appendChild($('control_buttons').hide())
+         portal.remove(widget);
+       }
+     }                                
+                                                                                                                                                           
+    function onChange() {
+      
+    }
+     function init() {             
+       portal = new Xilinus.Portal($('page').getElementsBySelector("div"), {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange, removeEffect: Effect.SwitchOff}); 
+       // Fake widgets
+       portal.add(new Xilinus.Widget().setTitle("Widget #1.0").setContent(latin1), 0);
+       portal.add(new Xilinus.Widget().setTitle("Widget #1.1").setContent(latin2), 0);
+       portal.add(new Xilinus.Widget().setTitle("Widget #1.2").setContent(latin3), 0);
+           
+       portal.add(new Xilinus.Widget().setTitle("Widget #2.0").setContent(latin2 + latin3), 1);
+       portal.add(new Xilinus.Widget().setTitle("Widget #2.1").setContent(latin3), 1);      
+     
+       portal.add(new Xilinus.Widget().setTitle("Widget #1.4").setContent(latin1 + latin2 + latin3), 2);
+       // Add controls buttons
+       portal.addWidgetControls("control_buttons");
+     }
+     Event.observe(window, "load", init);
+  </script>
+</body>
+</html>
