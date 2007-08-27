@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>Test Portal</title>
-  <link rel="stylesheet" href="page.css" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="themes/default.css" type="text/css" media="screen" charset="utf-8" />
-  <script type="text/javascript" src="prototype.js"></script> 
-  <script type="text/javascript" src="effects.js"></script> 
-  <script type="text/javascript" src="builder.js"></script> 
-  <script type="text/javascript" src="dragdrop.js"></script> 
-  <script type="text/javascript" src="portal.js"></script>  
+  <link rel="stylesheet" href="stylesheets/page.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../themes/default.css" type="text/css" media="screen" charset="utf-8" />
+  <script type="text/javascript" src="../lib/prototype.js"></script> 
+  <script type="text/javascript" src="../lib/effects.js"></script> 
+  <script type="text/javascript" src="../lib/builder.js"></script> 
+  <script type="text/javascript" src="../lib/dragdrop.js"></script> 
+  <script type="text/javascript" src="../src/portal.js"></script>  
 </head>
 <body>      
   <h1>Portal test page</h1>
@@ -53,7 +53,7 @@
       
     }
      function init() {             
-       portal = new Xilinus.Portal($('page').getElementsBySelector("div"), {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange, removeEffect: Effect.SwitchOff}); 
+       portal = new Xilinus.Portal("#page div", {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange, removeEffect: Effect.SwitchOff}); 
        // Fake widgets
        portal.add(new Xilinus.Widget().setTitle("Widget #1.0").setContent(latin1), 0);
        portal.add(new Xilinus.Widget().setTitle("Widget #1.1").setContent(latin2), 0);

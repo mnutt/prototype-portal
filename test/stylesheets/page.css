@@ -16,6 +16,7 @@ h3 {
 p {
   font-size: 12px;
 }   
+
 #page {
   margin: 10px auto;
 }
@@ -37,6 +38,7 @@ p {
   width: 20%;  
   background:#B3B3B3;
 }   
+
 #control_buttons {
   position:absolute;  
   right:0px;
@@ -49,7 +51,7 @@ p {
   float:left;
   width:16px;
   height:16px;
-  background: url(edit.png);    
+  background: url(../images/edit.png);    
   behavior: url(png.htc);   
   margin-right:5px;
 }
@@ -59,7 +61,7 @@ p {
   float:left;
   width:16px;
   height:16px;
-  background: url(delete.png);
+  background: url(../images/delete.png);
   behavior: url(png.htc);
   margin-right:5px;
 }

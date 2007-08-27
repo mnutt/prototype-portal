@@ -19,7 +19,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-// VERSION 1.0
+// VERSION 1.1-trunk
 
 if(typeof Draggable == 'undefined')
   throw("widget.js requires including script.aculo.us' dragdrop.js library");
@@ -115,8 +115,8 @@ Object.extend(Xilinus.Portal.prototype, {
                      onChange:     null,          // Called a widget has been move during drag and drop 
                      onUpdate:     null,          // Called a widget has been move after drag and drop
                      removeEffect: Element.remove // Remove effect (by default no effect), you can set it to Effect.SwitchOff for example
-                   }, options);
-    this._columns = columns;     
+                   }, options)
+    this._columns = (typeof columns == "string") ? $$(columns) : columns;
     this._widgets = new Array();          
     this._columns.each(function(element) {Droppables.add(element, {onHover: this.onHover.bind(this), overlap: "vertical"})}.bind(this));  
     this._outTimer  = null;
