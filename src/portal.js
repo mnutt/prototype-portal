@@ -114,11 +114,14 @@ Object.extend(Xilinus.Portal.prototype, {
                      onOutWidget:  null,          // Called when the mouse goes out of a widget                                           
                      onChange:     null,          // Called a widget has been move during drag and drop 
                      onUpdate:     null,          // Called a widget has been move after drag and drop
-                     removeEffect: Element.remove // Remove effect (by default no effect), you can set it to Effect.SwitchOff for example
+                     removeEffect: Element.remove,// Remove effect (by default no effect), you can set it to Effect.SwitchOff for example
+                     accept: null
                    }, options)
     this._columns = (typeof columns == "string") ? $$(columns) : columns;
     this._widgets = new Array();          
-    this._columns.each(function(element) {Droppables.add(element, {onHover: this.onHover.bind(this), overlap: "vertical"})}.bind(this));  
+    this._columns.each(function(element) {Droppables.add(element, {onHover: this.onHover.bind(this), 
+                                                                   overlap: "vertical", 
+                                                                   accept: this.options.accept})}.bind(this));  
     this._outTimer  = null;
     
     // Draggable calls makePositioned for IE fix (??), I had to remove it for all browsers fix :) to handle properly zIndex
@@ -135,6 +138,8 @@ Object.extend(Xilinus.Portal.prototype, {
     draggable = typeof draggable == "undefined" ? true : draggable
     // Add to widgets list
     this._widgets.push(widget);
+    if (this.options.accept)
+      widget.getElement().addClassName(this.options.accept)
     // Add element to column
     this._columns[columnIndex].appendChild(widget.getElement());
     widget.updateHeight();
@@ -221,6 +226,10 @@ Object.extend(Xilinus.Portal.prototype, {
   // DRAGGABLE OBSERVER CALLBACKS
   startDrag: function(eventName, draggable) { 
     var widget = draggable.element;
+    
+    if (!this._widgets.find(function(w) {return w == widget.widget}))
+      return;
+
     var column = widget.parentNode;
     
     // Create and insert ghost widget
@@ -245,6 +254,9 @@ Object.extend(Xilinus.Portal.prototype, {
 
   endDrag: function(eventName, draggable) {
     var widget = draggable.element;      
+    if (!this._widgets.find(function(w) {return w == widget.widget}))
+      return;
+    
     var column = widget.ghost.parentNode;
     
     column.insertBefore(draggable.element, widget.ghost); 

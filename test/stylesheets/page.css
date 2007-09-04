@@ -21,6 +21,16 @@ p {
   margin: 10px auto;
 }
 
+#page1 {  
+  float:left;
+  width:45%;
+}
+
+#page2 {
+  float:right;
+  width:45%;
+}
+
 #widget_col_0 { 
   float:left;
   width: 30%;  
@@ -37,6 +47,18 @@ p {
   float:left;
   width: 20%;  
   background:#B3B3B3;
+}   
+
+#widget_col_3 { 
+  float:left;
+  width: 40%;  
+  background:#B3B3B3;
+}   
+
+#widget_col_4 { 
+  float:left;
+  width: 60%;  
+  background:#E6E6E6;
 }   
 
 #control_buttons {

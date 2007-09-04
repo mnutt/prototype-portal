@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Test Multi Portal</title>
+  <link rel="stylesheet" href="stylesheets/page.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../themes/default.css" type="text/css" media="screen" charset="utf-8" />
+  <script type="text/javascript" src="../lib/prototype.js"></script> 
+  <script type="text/javascript" src="../lib/effects.js"></script> 
+  <script type="text/javascript" src="../lib/builder.js"></script> 
+  <script type="text/javascript" src="../lib/dragdrop.js"></script> 
+  <script type="text/javascript" src="../src/portal.js"></script>  
+</head>
+<body>      
+  <h1>Portal test page</h1>
+  <div id="page1">
+      <div id="widget_col_0"></div>
+      <div id="widget_col_1"></div>
+      <div id="widget_col_2"></div>
+ </div>       
+  <div id="page2">
+      <div id="widget_col_3"></div>
+      <div id="widget_col_4"></div>
+ </div>    
+ 
+ <div id="control_buttons" style="display:none">
+   <a href="#" id="edit_button"></a>
+   <a href="#" onclick="removeWidget(this); return false;" id="delete_button"></a>
+ </div>
+
+  <script type="text/javascript">
+     var portal1, portal2;     
+     var latin1 = "<h2>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>";
+     var latin2 = "<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> ";
+     var latin3 = "<h3>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3> ";
+      
+     function init() {             
+       portal1 = new Xilinus.Portal("#page1 div", {removeEffect: Effect.SwitchOff, accept:"portal1"}); 
+       // Fake widgets
+       portal1.add(new Xilinus.Widget().setTitle("Widget #1.0").setContent(latin1), 0);
+       portal1.add(new Xilinus.Widget().setTitle("Widget #1.1").setContent(latin2), 0);
+       portal1.add(new Xilinus.Widget().setTitle("Widget #1.2").setContent(latin3), 0);
+           
+       portal1.add(new Xilinus.Widget().setTitle("Widget #2.0").setContent(latin2 + latin3), 1);
+       portal1.add(new Xilinus.Widget().setTitle("Widget #2.1").setContent(latin3), 1);      
+     
+       portal1.add(new Xilinus.Widget().setTitle("Widget #1.4").setContent(latin1 + latin2 + latin3), 2);    
+       
+       portal2 = new Xilinus.Portal("#page2 div", {removeEffect: Effect.SwitchOff, accept:"portal2"}); 
+       portal2.add(new Xilinus.Widget().setTitle("Widget #1.0").setContent(latin1), 0);
+       portal2.add(new Xilinus.Widget().setTitle("Widget #1.1").setContent(latin2), 0);
+       portal2.add(new Xilinus.Widget().setTitle("Widget #2.1").setContent(latin3), 1);      
+       
+     }
+     Event.observe(window, "load", init);
+  </script>
+</body>
+</html>
