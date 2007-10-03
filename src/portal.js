@@ -36,6 +36,10 @@ Builder.dump();
 
 Xilinus.Widget = Class.create();  
 Xilinus.Widget.lastId = 0;
+Xilinus.Widget.remove = function(element, options) {    
+  if (options && options.afterFinish)
+    options.afterFinish.call();
+} 
 
 Object.extend(Xilinus.Widget.prototype, {
   initialize: function(className, id) {
@@ -54,6 +58,10 @@ Object.extend(Xilinus.Widget.prototype, {
     this._div.widget = this;
         
     return this;
+  },    
+  
+  destroy: function() {
+    this._div.remove();
   },
   
   getElement: function() {
@@ -108,14 +116,13 @@ Object.extend(Xilinus.Portal.prototype, {
   columns:   null, 
   
   initialize: function(columns, options) {   
-    this.options = Object.extend({
-                     url:          null,          // Url called by Ajax.Request after a drop
-                     onOverWidget: null,          // Called when the mouse goes over a widget
-                     onOutWidget:  null,          // Called when the mouse goes out of a widget                                           
-                     onChange:     null,          // Called a widget has been move during drag and drop 
-                     onUpdate:     null,          // Called a widget has been move after drag and drop
-                     removeEffect: Element.remove,// Remove effect (by default no effect), you can set it to Effect.SwitchOff for example
-                     accept: null
+    this.options = Object.extend({                  
+                     url:          null,                 // Url called by Ajax.Request after a drop
+                     onOverWidget: null,                 // Called when the mouse goes over a widget
+                     onOutWidget:  null,                 // Called when the mouse goes out of a widget                                           
+                     onChange:     null,                 // Called a widget has been move during drag and drop 
+                     onUpdate:     null,                 // Called a widget has been move after drag and drop
+                     removeEffect: Xilinus.Widget.remove // Remove effect (by default no effect), you can set it to Effect.SwitchOff for example
                    }, options)
     this._columns = (typeof columns == "string") ? $$(columns) : columns;
     this._widgets = new Array();          
@@ -159,7 +166,7 @@ Object.extend(Xilinus.Portal.prototype, {
     if (this.options.onOutWidget)
       widget.getElement().immediateDescendants().invoke("observe", "mouseout",  this._widgetMouseOut);
   },  
-  
+                
   remove: function(widget) {
     // Remove from the list
     this._widgets.reject(function(w) { return w == widget});
@@ -175,7 +182,7 @@ Object.extend(Xilinus.Portal.prototype, {
       widget.draggable.destroy();
       
     // Remove from the dom
-    this.options.removeEffect(widget.getElement());
+    this.options.removeEffect(widget.getElement(), {afterFinish: function() {widget.destroy();}});
     
     // Update columns heights
     this._updateColumnsHeight();  

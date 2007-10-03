@@ -53,7 +53,7 @@
       
     }
      function init() {             
-       portal = new Xilinus.Portal("#page div", {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange, removeEffect: Effect.SwitchOff}); 
+       portal = new Xilinus.Portal("#page div", {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange}); 
        // Fake widgets
        portal.add(new Xilinus.Widget().setTitle("Widget #1.0").setContent(latin1), 0);
        portal.add(new Xilinus.Widget().setTitle("Widget #1.1").setContent(latin2), 0);
