@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Test Portal</title>
+  <link rel="stylesheet" href="stylesheets/page.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../themes/default.css" type="text/css" media="screen" charset="utf-8" />
+  <script type="text/javascript" src="../lib/prototype.js"></script> 
+  <script type="text/javascript" src="../lib/effects.js"></script> 
+  <script type="text/javascript" src="../lib/builder.js"></script> 
+  <script type="text/javascript" src="../lib/dragdrop.js"></script> 
+  <script type="text/javascript" src="../src/portal.js"></script>  
+</head>
+<body>      
+  <h1>Portal test page</h1>
+  <div id="page">
+      <div id="widget_col_0">
+	<div class="widget" id="widget_0" style="position:relative">
+	  <div class="widget_nw">
+	    <div id="header_widget_0" class="widget_title widget_draggable">Widget #1.0</div>
+	  </div>
+	  <div class="widget_w">
+	    <div class="widget_content" id="content_widget_0">
+	      <h2>Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+	    </div>
+	  </div>
+	  <div class="widget_sw">
+	    <div class="widget_statusbar"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="widget_col_1">
+	<div class="widget" id="widget_1" style="position:relative">
+	  <div class="widget_nw">
+	    <div id="header_widget_1" class="widget_title widget_draggable">Widget #2.0</div>
+	  </div>
+	  <div class="widget_w">
+	    <div class="widget_content" id="content_widget_1">
+	      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
+	    </div>
+	  </div>
+	  <div class="widget_sw">
+	    <div class="widget_statusbar"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="widget_col_2">
+	<div class="widget" id="widget_2" style="position:relative">
+	  <div class="widget_nw">
+	    <div id="header_widget_2" class="widget_title widget_draggable">Widget #3.0</div>
+	  </div>
+	  <div class="widget_w">
+	    <div class="widget_content" id="content_widget_2">
+	      <h3>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3> 
+	    </div>
+	  </div>
+	  <div class="widget_sw">
+	    <div class="widget_statusbar"></div>
+	  </div>
+	</div>
+      </div>
+ </div>    
+ <div id="control_buttons" style="display:none">
+   <a href="#" id="edit_button"></a>
+   <a href="#" onclick="removeWidget(this); return false;" id="delete_button"></a>
+ </div>
+
+  <script type="text/javascript">
+     var portal;
+      
+     function onOverWidget(portal, widget) {
+       widget.getElement().insertBefore($('control_buttons'), widget.getElement().firstChild);
+       $('control_buttons').show(); 
+     } 
+   
+     function onOutWidget(portal, widget) {
+       $('control_buttons').hide();      
+     } 
+   
+     function removeWidget(element) {
+       var widget = $(element).up(".widget").widget;
+     
+       if (confirm('Are sure to remove this widget?')) { 
+         document.body.appendChild($('control_buttons').hide())
+         portal.remove(widget);
+       }
+     }                                
+                                                                                                                                                           
+    function onChange() {
+      
+    }
+     function init() {             
+       portal = new Xilinus.Portal("#page > div", {onOverWidget: onOverWidget, onOutWidget: onOutWidget, onChange: onChange}); 
+       portal.addWidgetControls("control_buttons");
+     }
+     Event.observe(window, "load", init);
+  </script>
+</body>
+</html>
